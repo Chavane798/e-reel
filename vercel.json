@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/App.svelte",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/sw.js",
+        "continue": true,
+        "headers": {
+          "Cache-Control": "public, max-age=0, must-revalidate",
+          "Service-Worker-Allowed": "/"
+        }
+      },
+      {
+        "src": "/login",
+        "dest": "/src/routes/login/App.svelte"
+      },
+      {
+        "src": "/camera",
+        "dest": "/src/routes/camera/App.svelte"
+      }
+    ]
+  }
+  
