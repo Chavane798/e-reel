@@ -1,47 +1,78 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import Router  from 'svelte-spa-router';
+  import { link } from 'svelte-spa-router';
+  import Login from './routes/login/App.svelte';
+  import Camera from './routes/camera/App.svelte';
+
+  // Definição das rotas
+  const routes = {
+    "/login": Login,
+    "/camera": Camera
+  };
 </script>
 
+<Router {routes} />
+
+<nav>
+  <a href="/" use:link>Home</a>
+  <a href="/login" use:link>Login</a>
+  <a href="/camera" use:link>Câmera</a>
+</nav>
+
+
 <main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+
+  <div class="container">
+    <div class="message">
+      <h1>Event-Reel</h1>
+      <p>Make every instant memorable!</p>
+    </div>
+    
+    <div class="button-container">
+      <a href="/login" use:link>
+        <button class="button">Login</button>
+      </a>
+    </div>
+
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  .message {
+    margin-bottom: 20px;
+    text-align: center;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .read-the-docs {
-    color: #888;
+
+  .button {
+    background-color: blue;
+    padding: 10px 20px;
+    margin: 8px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: darkblue;
   }
 </style>
