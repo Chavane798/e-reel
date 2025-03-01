@@ -1,13 +1,15 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "src/App.svelte",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
     {
       "src": "/sw.js",
-      "continue": true,
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate",
-        "Service-Worker-Allowed": "/"
-      }
+      "dest": "/public/sw.js"
     },
     {
       "src": "/login",
