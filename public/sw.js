@@ -1,16 +1,16 @@
-// public/sw.js
-self.addEventListener('install', (event) => {
-    console.log('Service Worker Installed');
-    // A lógica do seu service worker aqui
-  });
-  
-  self.addEventListener('activate', (event) => {
-    console.log('Service Worker Activated');
-    // Ativação do service worker
-  });
-  
-  self.addEventListener('fetch', (event) => {
-    console.log('Fetching:', event.request.url);
-    // Lógica para interceptar requisições
-  });
-  
+const CACHE_NAME = "pwa-cache-v1";
+const urlsToCache = ["/", "/index.html", "/global.css", "/build/bundle.js"];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});
