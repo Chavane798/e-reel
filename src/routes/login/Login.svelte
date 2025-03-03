@@ -5,7 +5,6 @@
     function handleSubmit() {
       console.log('User:', username);
       console.log('Password:', password);
-      // Aqui você pode adicionar a lógica de autenticação ou navegação
     }
   </script>
   

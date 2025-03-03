@@ -1,14 +1,15 @@
 const CACHE_NAME = "imdigital-cache-v1";
 const urlsToCache = [
-  "/", // Página inicial
+  "/",
   "/index.html",
-  "/global.css", // Adicione seu CSS principal
-  "/build/bundle.js", // Adicione o caminho correto dos assets
+  "/global.css",
+  "/build/bundle.js",
   "/images/8664905_lemon_fruit_icon.png",
-  "/images/8664884_hand_back_fist_icon.png"
+  "/images/8664884_hand_back_fist_icon.png",
+  "/offline.html"  // Página offline
 ];
 
-// Instala o Service Worker e faz cache dos arquivos
+// Evento de instalação do Service Worker
 self.addEventListener("install", (event) => {
   console.log("[Service Worker] Instalando...");
 
@@ -21,17 +22,22 @@ self.addEventListener("install", (event) => {
       .catch((error) => console.error("[Service Worker] Falha ao armazenar cache", error))
   );
 
-  self.skipWaiting(); // Ativa o novo Service Worker imediatamente
+  self.skipWaiting(); // Força a ativação do SW sem esperar os outros clientes
 });
 
-// Intercepta requisições e retorna do cache se possível
+// Evento de busca de recursos
 self.addEventListener("fetch", (event) => {
   console.log("[Service Worker] Buscando:", event.request.url);
-  
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        return response || fetch(event.request);
+        // Se o recurso estiver no cache, retorna ele. Caso contrário, busca na rede.
+        return response || fetch(event.request)
+          .catch(() => {
+            // Em caso de falha na rede, retorna uma página offline
+            return caches.match("/offline.html");
+          });
       })
       .catch(() => {
         console.error("[Service Worker] Falha na busca:", event.request.url);
@@ -39,14 +45,16 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-// Atualiza o cache quando necessário
+// Evento de ativação do Service Worker
 self.addEventListener("activate", (event) => {
   console.log("[Service Worker] Ativando...");
 
   const cacheWhitelist = [CACHE_NAME];
+  
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
+        // Remover caches antigos que não estão na lista de cacheWhitelist
         return Promise.all(
           cacheNames.map((cache) => {
             if (!cacheWhitelist.includes(cache)) {
@@ -58,5 +66,5 @@ self.addEventListener("activate", (event) => {
       })
   );
 
-  self.clients.claim();
+  self.clients.claim();  // Garante que o Service Worker tome controle imediatamente
 });

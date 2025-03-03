@@ -1,23 +1,13 @@
 {
   "version": 2,
+  "public": "dist",
   "builds": [
     {
-      "src": "src/App.svelte",
+      "src": "dist/**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/sw.js",
-      "dest": "/public/sw.js"
-    },
-    {
-      "src": "/login",
-      "dest": "/src/routes/login/App.svelte"
-    },
-    {
-      "src": "/camera",
-      "dest": "/src/routes/camera/App.svelte"
-    }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
