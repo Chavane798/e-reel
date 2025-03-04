@@ -7,16 +7,16 @@
     let savedImages = [];
   
     onMount(() => {
-      loadImage(); // Carrega a imagem ao montar o componente
-      loadSavedImages(); // Carrega todas as imagens salvas no LocalStorage
-      startCamera(); // Inicia a câmera ao montar o componente
+      loadImage();
+      loadSavedImages();
+      startCamera();
     });
   
     // Função para iniciar a câmera
     async function startCamera() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        videoElement.srcObject = stream; // Atribui o fluxo da câmera ao elemento de vídeo
+        videoElement.srcObject = stream;
       } catch (err) {
         console.error('Erro ao acessar a câmera:', err);
         alert('Não foi possível acessar a câmera. Verifique as permissões.');
@@ -26,14 +26,14 @@
     function captureImage() {
       const context = canvasElement.getContext('2d');
       context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-      capturedImage = canvasElement.toDataURL('image/png'); // Salva a imagem capturada como base64
+      capturedImage = canvasElement.toDataURL('image/png');
     }
   
     function saveImageLocally() {
       if (capturedImage) {
-        localStorage.setItem('capturedImage', capturedImage); // Salva a última imagem no LocalStorage
-        savedImages.push(capturedImage); // Adiciona a nova imagem ao array de imagens salvas
-        localStorage.setItem('savedImages', JSON.stringify(savedImages)); // Atualiza a lista de imagens salvas no LocalStorage
+        localStorage.setItem('capturedImage', capturedImage);
+        savedImages.push(capturedImage);
+        localStorage.setItem('savedImages', JSON.stringify(savedImages));
         alert('Imagem salva localmente!');
       }
     }
