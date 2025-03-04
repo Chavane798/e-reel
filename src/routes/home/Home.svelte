@@ -1,60 +1,24 @@
-
 <script>
-    import { link } from 'svelte-spa-router';
+  import { link } from 'svelte-spa-router';
 </script>
-<main>
 
-    <div class="container">
-      <div class="message">
-        <h1>Event-Reel</h1>
-        <p>Make every instant memorable!</p>
-      </div>
-      
-      <div class="button-container">
-        <a href="/login" use:link>
-          <button class="button">Login</button>
-        </a>
-      </div>
-  
-    </div>
-  </main>
-  
-  <style>
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-  
-    .message {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-  
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .button {
-      background-color: blue;
-      padding: 10px 20px;
-      margin: 8px;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      font-size: 25px;
-      text-align: center;
-      width: 200px;
-      height: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-  
-    .button:hover {
-      background-color: darkblue;
-    }
-  </style>
+<head>
+<link href="/src/app.css" rel="stylesheet">
+</head>
+
+<div class="bg-blue">
+<main class="flex flex-col gap-10 w-full max-w-4xl">
+  <div class="text-center">
+      <h1 class="text-4xl font-bold text-gray-900">Event-Reel</h1>
+      <p class="text-lg text-gray-600 mt-2">Make every instant memorable!</p>
+  </div>
+
+  <div class="mt-6">
+    <a href="/login" use:link>
+        <button class="w-48 h-12 bg-blue-600 text-white text-lg font-semibold rounded-full shadow-md transition hover:bg-blue-700">
+            Login
+        </button>
+    </a>
+  </div>
+</main>
+</div>
